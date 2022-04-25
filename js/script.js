@@ -74,7 +74,7 @@ const typeWord = (rusArr, engArr) => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    inputVar = inputText.value;
+    inputVar = inputText.value.trim().toLowerCase();
     inputEng = engArr[someIndex];
     console.log(inputEng);
     console.log(`Введенное значение: ${inputVar}`);
@@ -107,7 +107,7 @@ const typeWord = (rusArr, engArr) => {
 
 const result = () => {
   const t = Math.round((new Date() - current) / 1000);
-  container.style = "max-width: 350px";
+  container.style = "max-width: 400px";
   container.innerHTML = "";
   container.innerHTML = `<h1>Ошибки</h1>
   <h5>Затраченное время: ${t} сек</h5>
