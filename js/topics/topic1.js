@@ -4,7 +4,7 @@ const words1 = {
   поезд: "train",
   мотоцикл: ["motor-bike", "motorcycle", "bike", "motorbike", "motor cycle"],
   такси: "taxi",
-  троллейбус: "trolley bus",
+  троллейбус: ["trolley bus", "trolley", "trolleybus"],
   трамвай: "tram",
   автобус: "bus",
   автомобиль: "car",

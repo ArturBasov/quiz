@@ -24,6 +24,7 @@ let countQ;
 let current;
 
 const start = () => {
+  container.style = "max-width: 1000px";
   countQ = -1;
   container.innerHTML = ``;
   container.innerHTML = `<h3>Выберите тему</h3>
@@ -127,23 +128,37 @@ const typeWord = (rusArr, engArr) => {
 
 const result = (count) => {
   const t = Math.round((new Date() - current) / 1000);
-  console.log(`Amount ${count}`);
-  console.log(`Incorrect ${Object.keys(incorrect).length}`);
+
   const correctAns = count - Object.keys(incorrect).length;
-  container.style = "max-width: 400px";
+  container.style = "max-width: 600px";
   container.innerHTML = "";
   container.innerHTML = `<h1>Ошибки</h1>
   <h5>Затраченное время: ${t} сек</h5>
   <h6>${correctAns} правильных ответов, ${
     Object.keys(incorrect).length
   } не правильных</h6>
-  <h6>Ваш балл: ${Math.round(
-    (correctAns * 10) / Object.keys(incorrect).length
-  )} из 10</h6>
+  <h6>Ваш балл: <strong>${Math.round(
+    (correctAns * 10) / count
+  )}</strong> из <strong>10</strong></h6>
   <ul class="list">
   <li class="item">
   </li>
   </ul>`;
+  container.innerHTML += `<button class="resetbtn btn-success">Начать заново</button><br><br>`;
+  container.innerHTML += `<table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">№</th>
+            <th scope="col">Правильный ответ</th>
+            <th scope="col">Вы ответили</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>`;
+
+  const tbody = document.querySelector("#table-body");
+  let counter = 1;
 
   const inner = document.querySelectorAll(".list");
   inner[0].innerHTML = "";
@@ -152,10 +167,16 @@ const result = (count) => {
     inner[0].innerHTML += `<h3>Поздравляем, вы не сделали ни одной ошибки!</h3>`;
   } else {
     for (let e in incorrect) {
-      inner[0].innerHTML += `<li class="item">Правильно: ${e}, вы написали - ${incorrect[e]}</li>`;
+      tbody.innerHTML += `<tr>
+            <th scope="row">${counter}</th>
+            <td>${e}</td>
+            <td>${incorrect[e]}</td>
+          </tr>`;
+      counter++;
+
+      // inner[0].innerHTML += `<li class="item">Правильно: ${e}, вы написали - ${incorrect[e]}</li>`;
     }
   }
-  inner[0].innerHTML += `<br><button class="resetbtn btn-success">Начать заново</button>`;
   resetButton = document.querySelector(".resetbtn");
   resetButton.addEventListener("click", (e) => {
     e.preventDefault();
