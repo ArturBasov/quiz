@@ -71,6 +71,8 @@ const typeWord = (rusArr, engArr) => {
   someIndex = Math.floor(Math.random() * rusArr.length);
   ranomWord.textContent = `${rusArr[someIndex]}`;
   console.log(`Type word ${rusArr[someIndex]}`);
+
+  inputText.focus();
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
