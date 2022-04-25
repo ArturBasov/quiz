@@ -13,7 +13,7 @@ const words2 = {
   компьютер: "computer",
   ученик: "pupil",
   портфель: "school bag",
-  учебник: ["text book", "text book"],
+  учебник: ["text book", "textbook"],
   тетрадь: "exercise book",
   словарь: ["dictionary", "vocabulary"],
   пенал: "pencil box",

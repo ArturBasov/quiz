@@ -4,10 +4,8 @@ import { words1 } from "./topics/topic1.js";
 import { words2 } from "./topics/topic2.js";
 import { words3 } from "./topics/topic3.js";
 
-let arrRus1;
-let arrEng1;
-let arrRus2;
-let arrEng2;
+let arrRus;
+let arrEng;
 
 const container = document.querySelector(".text-center");
 let ranomWord;
@@ -38,42 +36,58 @@ const start = () => {
   btn[0].addEventListener("click", (e) => {
     e.preventDefault();
     current = new Date();
-    arrRus1 = JSON.parse(JSON.stringify(Object.keys(words1)));
-    arrEng1 = JSON.parse(JSON.stringify(Object.values(words1)));
+    arrRus = JSON.parse(JSON.stringify(Object.keys(words1)));
+    arrEng = JSON.parse(JSON.stringify(Object.values(words1)));
+    const amount = arrRus.length;
     incorrect = {};
-    typeWord(arrRus1, arrEng1);
+    typeWord(arrRus, arrEng, amount);
   });
 
   btn[1].addEventListener("click", (e) => {
     e.preventDefault();
     current = new Date();
-    arrRus2 = JSON.parse(JSON.stringify(Object.keys(words2)));
-    arrEng2 = JSON.parse(JSON.stringify(Object.values(words2)));
+    arrRus = JSON.parse(JSON.stringify(Object.keys(words2)));
+    arrEng = JSON.parse(JSON.stringify(Object.values(words2)));
+    const amount = arrRus.length;
     incorrect = {};
-    typeWord(arrRus2, arrEng2);
+    typeWord(arrRus, arrEng, amount);
   });
 
   btn[2].addEventListener("click", (e) => {
     e.preventDefault();
     current = new Date();
-    arrRus2 = JSON.parse(JSON.stringify(Object.keys(words3)));
-    arrEng2 = JSON.parse(JSON.stringify(Object.values(words3)));
+    arrRus = JSON.parse(JSON.stringify(Object.keys(words3)));
+    arrEng = JSON.parse(JSON.stringify(Object.values(words3)));
+    const amount = arrRus.length;
     incorrect = {};
-    typeWord(arrRus2, arrEng2);
+    typeWord(arrRus, arrEng, amount);
   });
 };
 
 start();
 
-const typeWord = (rusArr, engArr) => {
+const typeWord = (rusArr, engArr, amount) => {
   countQ++;
+    container.style = "max-width: 300px";
   container.innerHTML = "";
   container.innerHTML += `<form class="input_form">
         <span>Введите перевод слова</span>
         <br />
         <br />
         <h1 class="word"></h1>
+    <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        style="width: ${((countQ + 1) * 100) / amount}%"
+        aria-valuenow="${countQ + 1}"
+        aria-valuemin="0"
+        aria-valuemax="${amount}"
+      >
         ${countQ + 1}
+      </div>
+    </div>
+
         <br />
         <input class="input" type="text" placeholder="Перевод..." />
         <button class="btn-success">Ok</button>
@@ -122,7 +136,7 @@ const typeWord = (rusArr, engArr) => {
     engArr.splice(someIndex, 1);
 
     form.reset();
-    typeWord(rusArr, engArr);
+    typeWord(rusArr, engArr, amount);
   });
 };
 
