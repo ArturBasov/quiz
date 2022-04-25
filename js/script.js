@@ -3,6 +3,7 @@
 import { words1 } from "./topics/topic1.js";
 import { words2 } from "./topics/topic2.js";
 import { words3 } from "./topics/topic3.js";
+import { words4 } from "./topics/topic4.js";
 
 let arrRus;
 let arrEng;
@@ -22,53 +23,59 @@ let countQ;
 let current;
 
 const start = () => {
-  container.style = "max-width: 1000px";
+  container.style = "max-width: 500px";
   countQ = -1;
-  container.innerHTML = ``;
+
   container.innerHTML = `<h3>Выберите тему</h3>
   <br>
-  <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Здания и транспорт</a>
-  <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Школа</a>
-  <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Профессии</a>
+  <ul>
+    <li><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Здания и транспорт</a></li>
+    <br>
+    <li><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Школа</a></li>
+    <br>
+    <li><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Профессии</a></li>
+    <br>
+    <li><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Хобби</a></li>
+    <br>
+  </ul>
   `;
   const btn = document.querySelectorAll(".btn-primary");
 
   btn[0].addEventListener("click", (e) => {
     e.preventDefault();
-    current = new Date();
-    arrRus = JSON.parse(JSON.stringify(Object.keys(words1)));
-    arrEng = JSON.parse(JSON.stringify(Object.values(words1)));
-    const amount = arrRus.length;
-    incorrect = {};
-    typeWord(arrRus, arrEng, amount);
+    preStart(words1);
   });
 
   btn[1].addEventListener("click", (e) => {
     e.preventDefault();
-    current = new Date();
-    arrRus = JSON.parse(JSON.stringify(Object.keys(words2)));
-    arrEng = JSON.parse(JSON.stringify(Object.values(words2)));
-    const amount = arrRus.length;
-    incorrect = {};
-    typeWord(arrRus, arrEng, amount);
+    preStart(words2);
   });
 
   btn[2].addEventListener("click", (e) => {
     e.preventDefault();
-    current = new Date();
-    arrRus = JSON.parse(JSON.stringify(Object.keys(words3)));
-    arrEng = JSON.parse(JSON.stringify(Object.values(words3)));
-    const amount = arrRus.length;
-    incorrect = {};
-    typeWord(arrRus, arrEng, amount);
+    preStart(words3);
   });
+
+  btn[3].addEventListener("click", (e) => {
+    e.preventDefault();
+    preStart(words4);
+  });
+};
+
+const preStart = (arr) => {
+  current = new Date();
+  arrRus = JSON.parse(JSON.stringify(Object.keys(arr)));
+  arrEng = JSON.parse(JSON.stringify(Object.values(arr)));
+  const amount = arrRus.length;
+  incorrect = {};
+  typeWord(arrRus, arrEng, amount);
 };
 
 start();
 
 const typeWord = (rusArr, engArr, amount) => {
   countQ++;
-    container.style = "max-width: 300px";
+  container.style = "max-width: 400px";
   container.innerHTML = "";
   container.innerHTML += `<form class="input_form">
         <span>Введите перевод слова</span>
@@ -102,8 +109,8 @@ const typeWord = (rusArr, engArr, amount) => {
     return;
   }
   someIndex = Math.floor(Math.random() * rusArr.length);
-  ranomWord.textContent = `${rusArr[someIndex]}`;
-  console.log(`Type word ${rusArr[someIndex]}`);
+
+  ranomWord.textContent = `${rusArr[someIndex].replace(/_/gi, " ")}`;
 
   inputText.focus();
   form.addEventListener("submit", (e) => {
@@ -111,9 +118,6 @@ const typeWord = (rusArr, engArr, amount) => {
 
     inputVar = inputText.value.trim().toLowerCase();
     inputEng = engArr[someIndex];
-    console.log(inputEng);
-    console.log(`Введенное значение: ${inputVar}`);
-    console.log(`Правильное значение: ${inputEng}`);
 
     if (typeof inputEng == "object") {
       let arrElement = false;
@@ -147,10 +151,9 @@ const result = (count) => {
   container.style = "max-width: 600px";
   container.innerHTML = "";
   container.innerHTML = `<h1>Ошибки</h1>
-  <h5>Затраченное время: ${t} сек</h5>
-  <h6>${correctAns} правильных ответов, ${
-    Object.keys(incorrect).length
-  } не правильных</h6>
+  <h5>Затраченное время: <strong>${t}</strong> сек</h5>
+  <h6><strong>${correctAns}</strong> правильных ответов,
+  <strong>${Object.keys(incorrect).length}</strong> не правильных</h6>
   <h6>Ваш балл: <strong>${Math.round(
     (correctAns * 10) / count
   )}</strong> из <strong>10</strong></h6>
@@ -187,8 +190,6 @@ const result = (count) => {
             <td>${incorrect[e]}</td>
           </tr>`;
       counter++;
-
-      // inner[0].innerHTML += `<li class="item">Правильно: ${e}, вы написали - ${incorrect[e]}</li>`;
     }
   }
   resetButton = document.querySelector(".resetbtn");
