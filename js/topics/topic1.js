@@ -2,7 +2,7 @@ const words1 = {
   самолет: "plane",
   корабль: "ship",
   поезд: "train",
-  мотоцикл: "motor-bike",
+  мотоцикл: ["motor-bike", "motorcycle", "bike", "motorbike", "motor cycle"],
   такси: "taxi",
   троллейбус: "trolley bus",
   трамвай: "tram",

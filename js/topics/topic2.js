@@ -15,7 +15,7 @@ const words2 = {
   портфель: "school bag",
   учебник: ["text book", "text book"],
   тетрадь: "exercise book",
-  словарь: "dictionary",
+  словарь: ["dictionary", "vocabulary"],
   пенал: "pencil box",
   ручка: "pen",
   карандаш: "pencil",
