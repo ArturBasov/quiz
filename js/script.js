@@ -33,7 +33,7 @@ const start = () => {
     current = new Date();
     arrRus1 = JSON.parse(JSON.stringify(Object.keys(words1)));
     arrEng1 = JSON.parse(JSON.stringify(Object.values(words1)));
-
+    incorrect = {};
     typeWord(arrRus1, arrEng1);
   });
   btn[1].addEventListener("click", (e) => {
@@ -41,6 +41,7 @@ const start = () => {
     current = new Date();
     arrRus2 = JSON.parse(JSON.stringify(Object.keys(words2)));
     arrEng2 = JSON.parse(JSON.stringify(Object.values(words2)));
+    incorrect = {};
     typeWord(arrRus2, arrEng2);
   });
 };
