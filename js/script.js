@@ -16,8 +16,9 @@ let resetButton;
 
 let inputVar = "";
 let inputEng = "";
+let inputRus = [];
 let someIndex = 0;
-let incorrect = {};
+let incorrectEng = {};
 let countQ;
 
 let current;
@@ -67,7 +68,7 @@ const preStart = (arr) => {
   arrRus = JSON.parse(JSON.stringify(Object.keys(arr)));
   arrEng = JSON.parse(JSON.stringify(Object.values(arr)));
   const amount = arrRus.length;
-  incorrect = {};
+  incorrectEng = {};
   typeWord(arrRus, arrEng, amount);
 };
 
@@ -128,11 +129,13 @@ const typeWord = (rusArr, engArr, amount) => {
         }
       }
       if (!arrElement) {
-        incorrect[inputEng] = inputVar;
+        incorrectEng[inputEng] = inputVar;
+        inputRus.push(rusArr[someIndex].replace(/_/gi, " "));
       }
     } else {
       if (inputEng !== inputVar) {
-        incorrect[inputEng] = inputVar;
+        incorrectEng[inputEng] = inputVar;
+        inputRus.push(rusArr[someIndex].replace(/_/gi, " "));
       }
     }
 
@@ -147,13 +150,13 @@ const typeWord = (rusArr, engArr, amount) => {
 const result = (count) => {
   const t = Math.round((new Date() - current) / 1000);
 
-  const correctAns = count - Object.keys(incorrect).length;
-  container.style = "max-width: 600px";
+  const correctAns = count - Object.keys(incorrectEng).length;
+  container.style = "max-width: 800px";
   container.innerHTML = "";
   container.innerHTML = `<h1>Ошибки</h1>
   <h5>Затраченное время: <strong>${t}</strong> сек</h5>
   <h6><strong>${correctAns}</strong> правильных ответов,
-  <strong>${Object.keys(incorrect).length}</strong> не правильных</h6>
+  <strong>${Object.keys(incorrectEng).length}</strong> не правильных</h6>
   <h6>Ваш балл: <strong>${Math.round(
     (correctAns * 10) / count
   )}</strong> из <strong>10</strong></h6>
@@ -166,6 +169,7 @@ const result = (count) => {
         <thead>
           <tr>
             <th scope="col">№</th>
+            <th scope="col">Слово</th>
             <th scope="col">Правильный ответ</th>
             <th scope="col">Вы ответили</th>
           </tr>
@@ -179,15 +183,16 @@ const result = (count) => {
 
   const inner = document.querySelectorAll(".list");
   inner[0].innerHTML = "";
-  if (Object.keys(incorrect) == 0) {
+  if (Object.keys(incorrectEng) == 0) {
     container.style = "max-width: 1000px";
     inner[0].innerHTML += `<h3>Поздравляем, вы не сделали ни одной ошибки!</h3>`;
   } else {
-    for (let e in incorrect) {
+    for (let e in incorrectEng) {
       tbody.innerHTML += `<tr>
             <th scope="row">${counter}</th>
+            <td>${inputRus[counter - 1]}</td>
             <td>${e}</td>
-            <td>${incorrect[e]}</td>
+            <td>${incorrectEng[e]}</td>
           </tr>`;
       counter++;
     }
