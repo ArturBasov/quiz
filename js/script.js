@@ -13,6 +13,7 @@ let ranomWord;
 let form;
 let inputText;
 let resetButton;
+let returnBtn;
 
 let inputVar = "";
 let inputEng = "";
@@ -95,15 +96,23 @@ const typeWord = (rusArr, engArr, amount) => {
         ${countQ + 1}
       </div>
     </div>
-
         <br />
         <input class="input" type="text" placeholder="Перевод..." />
         <button class="btn-success">Ok</button>
-      </form>`;
+      </form>
+      <br />
+      <button class="btn-secondary">Вернуться назад</button>`;
 
   ranomWord = document.querySelector(".word");
   form = document.querySelector(".input_form");
   inputText = form.querySelector(".input");
+  returnBtn = document.querySelector(".btn-secondary");
+  console.log(returnBtn);
+
+  returnBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    start();
+  });
 
   if (rusArr.length == 0) {
     result(countQ);
@@ -200,6 +209,7 @@ const result = (count) => {
   resetButton = document.querySelector(".resetbtn");
   resetButton.addEventListener("click", (e) => {
     e.preventDefault();
+    inputRus = [];
     start();
   });
 };
